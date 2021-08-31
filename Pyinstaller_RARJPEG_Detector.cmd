@@ -1,0 +1,1 @@
+pyinstaller --onefile --noconsole -i "RARJPEG_Detector_Icon.ico" RARJPEG_Detector.py
