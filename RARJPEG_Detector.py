@@ -31,8 +31,11 @@ class mywindow(QtWidgets.QMainWindow):
                                   '37 7A BC AF 27 1C']                                  #7z
 
     def FindRARJPEGButtonClicked(self):
-        if self.ui.checkBox.isChecked() == False: self.FindRARJPEG()
-        else: self.FindRARJPEGSubDirs()
+        self.FindRARJPEG() if not self.ui.checkBox.isChecked() else self.FindRARJPEGSubDirs()
+        # if not self.ui.checkBox.isChecked():
+        #     self.FindRARJPEG()
+        # else:
+        #     self.FindRARJPEGSubDirs()
 
     def FindRARJPEG(self):
         s = QMessageBox()
@@ -48,7 +51,7 @@ class mywindow(QtWidgets.QMainWindow):
         Files = []
         CountRJ, CountNewRJ, CountNotRJ = 0, 0, 0
         for File_i in ListDir:
-            if os.path.isdir(File_i) == False:
+            if not os.path.isdir(File_i):
                 File_i_FullName = '/'.join([FilePath, File_i])
                 Files.append(File_i_FullName)
         for File_i in Files:
@@ -99,8 +102,11 @@ class mywindow(QtWidgets.QMainWindow):
         #d.setViewMode(QFileDialog.Detail)
         FolderToCheckName = d.getExistingDirectory(self, "Выбрать папку", "/home")
         self.ui.lineEdit.setText(FolderToCheckName)
-        if self.ui.lineEdit.text() != "": self.ui.pushButton_2.setEnabled(True)
-        else: self.ui.pushButton_2.setEnabled(False)
+        self.ui.pushButton_2.setEnabled(self.ui.lineEdit.text() != "")
+        # if self.ui.lineEdit.text() != "":
+        #     self.ui.pushButton_2.setEnabled(True)
+        # else:
+        #     self.ui.pushButton_2.setEnabled(False)
 
     def aboutClicked(self):
         q = QMessageBox()
@@ -117,8 +123,9 @@ class mywindow(QtWidgets.QMainWindow):
   \____/''')
 
 
-app = QtWidgets.QApplication([])
-application = mywindow()
-application.show()
+if __name__ == '__main__':
+    app = QtWidgets.QApplication([])
+    application = mywindow()
+    application.show()
 
-sys.exit(app.exec())
+    sys.exit(app.exec())
